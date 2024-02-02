@@ -40,13 +40,15 @@
     }catch(PDOException $e) {
             echo $e->getMessage();
     }*/
+    
 
     //フォームを打ち込んだ時
     if(!empty($_POST["submitButton"])){
+        $postdate = date("Y-m-d H:i:s");
 
 
         //名前のバリデーションチェック
-        if(empty($_POST["username"])){
+        /*if(empty($_POST["username"])){
             echo "名前を入力してください。";
             exit;
         }
@@ -56,8 +58,47 @@
             //echo "<script>document.querySelector('.commentTextArea').value = '名前を入力してください。';</script>";
             exit;
         }
+        */
+        //$postdate = date("Y-m-d H:i:s");
 
+        /*if(empty($_POST["username"])){
+            echo "名前を入力してください。<br>";
+        }
+
+        $name = $_POST["username"];
+        if(!preg_match('/^.{1,30}$/', $name)){
+            echo "名前は30文字以内で入力してください。";
+        }
+
+        if(empty($_POST["comment"])){
+            echo "本文を入力してください。";
+        }
+        */
+        $errors = array();
+
+    if(empty($_POST["username"])){
+        $errors[] = "名前を入力してください。";
+    }
+
+    $name = $_POST["username"];
+    if(!preg_match('/^.{1,30}$/', $name)){
+        $errors[] = "名前は30文字以内で入力してください。";
+    }
+
+    if(empty($_POST["comment"])){
+        $errors[] = "本文を入力してください。";
+    }
+
+    // エラーメッセージ表示
+    if (!empty($errors)) {
+        foreach ($errors as $error) {
+            echo $error . '<br>';
+        }
+    } else {
         $postdate = date("Y-m-d H:i:s");
+    }
+
+
 
         try{
     
@@ -69,7 +110,6 @@
             $stmt->bindParam(':postdate', $postdate, PDO::PARAM_STR);
 
             $stmt->execute();
-            echo "投稿が完了しました。";
         }catch(PDOException $e){
 
             echo $e->getMessage();
@@ -78,6 +118,7 @@
 
 
     }
+
 
     //echo $_POST["username"]. "<br>";
     //echo $_POST["comment"];
@@ -105,6 +146,22 @@
 <body>
     <h1 class="title">掲示板</h1>
     <hr>
+    <form class="formWrapper" method="POST">
+            <div>
+                <input type="submit" value="書き込む" name="submitButton">
+            </div>
+            <div>
+                <lable for="username">名前：</label>
+                <input type="text" name="username">
+            </div>
+            <!--requiredでの入力制限かけること可能-->
+
+            <div>
+                <label for="comment">コメント：</label>
+
+                <textarea class="commentTextArea" name="comment"></textarea>
+            </div>
+            <!--requiredでの入力制限かけること可能-->
     <div class="boardWrapper">
         <section>
             <?php foreach($comment_array as $comment): ?>
@@ -121,14 +178,6 @@
                 </article>
             <?php endforeach; ?>
         </section>
-        <form class="formWrapper" method="POST">
-            <div>
-                <input type="submit" value="書き込む" name="submitButton">
-                <lable for="">名前：</label>
-                <input type="text" name="username">
-            </div>
-            <div>
-                <textarea class="commentTextArea" name="comment"></textarea>
 
 
 </body>
