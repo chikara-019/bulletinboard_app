@@ -1,6 +1,7 @@
 <?php
 
-
+    require_once 'database.php';
+    /*
     date_default_timezone_set("Asia/Tokyo");
     $comment_array = array();
     //arry=配列
@@ -34,6 +35,7 @@
 
     $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
     $pdo = $dbHandler->getPro();
+    */
 
     /*try{
         $pdo = new PDO('mysql:host=run-php-db;dbname=bbs_yt', "root", "root"); 
@@ -44,7 +46,7 @@
 
     //フォームを打ち込んだ時
     if(!empty($_POST["submitButton"])){
-        $postdate = date("Y-m-d H:i:s");
+        //$postdate = date("Y-m-d H:i:s");
 
 
         //名前のバリデーションチェック
