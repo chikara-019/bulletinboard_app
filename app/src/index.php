@@ -1,139 +1,73 @@
 <?php
 
-    require_once 'database.php';
-    /*
+    //require_once 'database.php';
+    //$dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
+    //$pdo = $dbHandler->getPro();
+    require_once 'page.php';
     date_default_timezone_set("Asia/Tokyo");
-    $comment_array = array();
-    //arry=配列
-    //ただの変数だと1つしか入らないのにたいし、配列であれば複数対応可能 
-    //echo $_POST["submitButton"]. "<br>";
+
+
+
+
+    $comment_array = array();//配列にqueryで取得したものを入れておく
     $pdo = null;
     $stmt = null;
-    //データベースとの接続を管理するdatabaseクラスを定義
-    class Database{
-        //privateで外部からのアクセスを制限
-        private $pdo;
+    $error_messages = array();
+    $comment_page = 20;
 
-        public function __construct($host, $dbname, $user, $password){
-            try{
-                $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
-                $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                //接続が成功するとpdoに接続の際に使用される情報が代入
-            }catch(PDOException $e){
-                echo 'Connection failed:'. $e->getMessage();
-                //接続に失敗した際はPDOExceptionエラー詳細情報が確認できる
-            }
-        }
-        //ここの処理がインスタンス化されると呼ばれる
-        //引数はデータベースとの接続に必要な情報
 
-        public function getPro(){
-            return $this->pdo;
-            //クラス内のプラベートメンバ変数の値を取得
-        }
+    try{
+        $pdo = new PDO('mysql:host=run-php-db;dbname=bbs_yt', "root", "root");
+
+    }catch(PDOException $e){
+        echo $e->getMessage();
     }
-
-    $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
-    $pdo = $dbHandler->getPro();
-    */
-
-    /*try{
-        $pdo = new PDO('mysql:host=run-php-db;dbname=bbs_yt', "root", "root"); 
-    }catch(PDOException $e) {
-            echo $e->getMessage();
-    }*/
     
+    $sql = "SELECT id, username, comment, postdate FROM bbs_table";
+    $comment_array = $pdo->query($sql);//sql文をqueryを使って問い合わせができる
+
 
     //フォームを打ち込んだ時
     if(!empty($_POST["submitButton"])){
-        //$postdate = date("Y-m-d H:i:s");
 
+        $postdate = date("Y-m-d H:i:s");
 
-        //名前のバリデーションチェック
-        /*if(empty($_POST["username"])){
+        //名前チェック
+        if(empty($_POST["username"])){
             echo "名前を入力してください。";
-            exit;
-        }
-        
-        if(empty($_POST["comment"])){
-            echo "本文を入力してください。";
-            //echo "<script>document.querySelector('.commentTextArea').value = '名前を入力してください。';</script>";
-            exit;
-        }
-        */
-        //$postdate = date("Y-m-d H:i:s");
-
-        /*if(empty($_POST["username"])){
-            echo "名前を入力してください。<br>";
-        }
-
-        $name = $_POST["username"];
-        if(!preg_match('/^.{1,30}$/', $name)){
+        }elseif(!preg_match('/^.{1,30}$/', $_POST["username"])){
             echo "名前は30文字以内で入力してください。";
         }
 
+        //コメントチェック
         if(empty($_POST["comment"])){
-            echo "本文を入力してください。";
-        }
-        */
-        $errors = array();
+            echo "コメントを入力してください。";
+        }elseif(!preg_match('/^.{1,200}$/', $_POST["comment"])){
+            echo "コメントは200文字以内で入力してください。";
 
-    if(empty($_POST["username"])){
-        $errors[] = "名前を入力してください。";
-    }
-
-    $name = $_POST["username"];
-    if(!preg_match('/^.{1,30}$/', $name)){
-        $errors[] = "名前は30文字以内で入力してください。";
-    }
-
-    if(empty($_POST["comment"])){
-        $errors[] = "本文を入力してください。";
-    }
-
-    // エラーメッセージ表示
-    if (!empty($errors)) {
-        foreach ($errors as $error) {
-            echo $error . '<br>';
-        }
-    } else {
-        $postdate = date("Y-m-d H:i:s");
-    }
+        }else{
 
 
+            try{
+                $stmt = $pdo->prepare("INSERT INTO bbs_table (username, comment, postdate) VALUES(:username, :comment, :postdate)");
+                $stmt->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
+                $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
+                $stmt->bindParam(':postdate', $postdate, PDO::PARAM_STR);
+        
+                $stmt->execute();
+                
+                echo "投稿完了いたしました。";
 
-        try{
-    
-            // 17行目のコードを以下のように修正します。
-            //$stmt = $pdo->prepare("INSERT INTO bbs_table ('username', 'comment', 'postdate') VALUES (:username, :comment, :postdate)");
-            $stmt = $pdo->prepare("INSERT INTO `bbs_table` (`username`, `comment`, `postdate`) VALUES(:username, :comment, :postdate);");
-            $stmt->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
-            $stmt->bindParam(':comment', $_POST["comment"], PDO::PARAM_STR);
-            $stmt->bindParam(':postdate', $postdate, PDO::PARAM_STR);
+            }catch(PDOException $e){
+                echo "投稿に失敗しました。". $e->getMessage();
+            }
+        
 
-            $stmt->execute();
-        }catch(PDOException $e){
-
-            echo $e->getMessage();
         }
 
-
-
     }
 
 
-    //echo $_POST["username"]. "<br>";
-    //echo $_POST["comment"];
-
-
-    //DBからコメントデータを取得する
-    $sql = $sql = "SELECT id, username, comment, postdate FROM bbs_table";
-
-    //sql文で、query関数を呼ぶことで問い合わせができるようになる。
-    $comment_array = $pdo->query($sql);
-    //$comment_arrayの中にデータベースの情報を保存しておくことができる→htmlで出力
-    //DBの接続を閉じる
-    $pdo = null;
 
 ?>
 
@@ -150,13 +84,17 @@
     <hr>
     <form class="formWrapper" method="POST">
             <div>
-                <input type="submit" value="書き込む" name="submitButton">
+                <input type="submit" value="投稿する" name="submitButton">
             </div>
             <div>
                 <lable for="username">名前：</label>
                 <input type="text" name="username">
             </div>
             <!--requiredでの入力制限かけること可能-->
+            <div>
+                <lable for="title">タイトル：</label>
+                <input type="text" name="title">
+            </div>
 
             <div>
                 <label for="comment">コメント：</label>

@@ -25,12 +25,11 @@
         //ここの処理がインスタンス化されると呼ばれる
         //引数はデータベースとの接続に必要な情報
 
-        public function getPro(){
+        public function getpdo(){
             return $this->pdo;
             //クラス内のプラベートメンバ変数の値を取得
         }
     }
 
-    $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
-    $pdo = $dbHandler->getPro();
+
 ?>
