@@ -3,7 +3,6 @@
     //require_once 'database.php';
     //$dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
     //$pdo = $dbHandler->getPro();
-    require_once 'page.php';
     date_default_timezone_set("Asia/Tokyo");
 
 
@@ -119,6 +118,8 @@
             <?php endforeach; ?>
         </section>
 
-
+                <div>
+                    <?php require 'page.php';?>
+                </div>   
 </body>
 </html>
