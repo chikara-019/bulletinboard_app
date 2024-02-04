@@ -22,7 +22,7 @@
         echo $e->getMessage();
     }
     
-    $sql = "SELECT id, username, comment, postdate FROM bbs_table";
+    $sql = "SELECT id, username, title, comment, postdate FROM bbs_table";
     $comment_array = $pdo->query($sql);//sql文をqueryを使って問い合わせができる
 
 
@@ -48,8 +48,10 @@
 
 
             try{
-                $stmt = $pdo->prepare("INSERT INTO bbs_table (username, comment, postdate) VALUES(:username, :comment, :postdate)");
+                $stmt = $pdo->prepare("INSERT INTO bbs_table (username, title, comment, postdate) VALUES(:username, :title, :comment, :postdate)");
                 $stmt->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
+                $stmt->bindParam(':title', $_POST['title'], PDO::PARAM_STR);
+
                 $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
                 $stmt->bindParam(':postdate', $postdate, PDO::PARAM_STR);
         
@@ -109,6 +111,9 @@
                         <div class="nameArea">
                             <span>名前：</span>
                             <p class="username"><?php echo $comment["username"]; ?></p>
+                            <span>タイトル：</span>
+
+                            <p class="username"><?php echo $comment["title"]; ?></p>
                             <time>:<?php echo $comment["postdate"]; ?></time>
                             
                         </div>
