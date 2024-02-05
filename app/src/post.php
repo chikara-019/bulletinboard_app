@@ -17,15 +17,27 @@ date_default_timezone_set("Asia/Tokyo");
         //名前チェック
         if(empty($_POST["username"])){
             echo "名前を入力してください。";
-        }elseif(!preg_match('/^.{1,30}$/', $_POST["username"])){
-            echo "名前は30文字以内で入力してください。";
+            return;
+        }elseif(!preg_match('/^.{1,20}$/', $_POST["username"])){
+            echo "名前は20文字以内で入力してください。";
+            return;
         }
 
+        //タイトルチェック
+        if(empty($_POST["title"])){
+            echo "タイトルを入力してください。";
+            return;
+        }elseif(!preg_match('/^.{1,30}$/', $_POST["title"])){
+            echo "タイトル30文字以内で入力してください。";
+            return;
+        }
         //コメントチェック
         if(empty($_POST["comment"])){
             echo "コメントを入力してください。";
-        }elseif(!preg_match('/^.{1,200}$/', $_POST["comment"])){
+            return;
+        }elseif(!preg_match('/^.{1,50}$/', $_POST["comment"])){
             echo "コメントは200文字以内で入力してください。";
+            return;
 
         }else{
 

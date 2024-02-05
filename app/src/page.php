@@ -25,6 +25,7 @@ echo "page" . $totalpage;
 
 
 require_once 'database.php';
+require_once 'date.php';
 
 $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
 $pdo = $dbHandler->getPDO();
@@ -52,7 +53,7 @@ $sql = "SELECT id, username, title, comment, postdate FROM bbs_table";
 $comment_array2 = $pdo->query($sql);
 
 
-foreach ($comment_array2 as $comment) {
+foreach ($results as $comment) {
     echo "<p>{$comment['username']} - {$comment['comment']} - {$comment['postdate']}</p>";
 }
 
