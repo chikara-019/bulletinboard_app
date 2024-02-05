@@ -25,12 +25,11 @@ echo "page" . $totalpage;
 
 
 require_once 'database.php';
-require_once 'date.php';
 
 $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
 $pdo = $dbHandler->getPDO();
 
-$datemax = 5;
+$datemax = 20;
 
 // 現在のページ番号、デフォルトは1
 $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -51,10 +50,7 @@ $totalpage = ceil($totalcount / $datemax);
 
 
 
-foreach ($comments as $comment) {
-    //var_dump($results);
-    echo "<p>名前：{$comment['username']}タイトル：{$comment['title']}コメント：{$comment['comment']}{$comment['postdate']}</p>";
-}
+
 
 
 // ページネーションリンクの表示
