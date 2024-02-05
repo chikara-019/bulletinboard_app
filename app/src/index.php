@@ -4,6 +4,7 @@
     require_once 'functions.php';
     require_once 'post.php';
     require_once 'date.php';
+    require_once 'page.php';
 
     $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
     $pdo = $dbHandler->getpdo();
@@ -70,7 +71,7 @@
             <!--requiredでの入力制限かけること可能-->
     <div class="boardWrapper">
         <section>
-            <?php foreach($results as $comment): ?>
+            <?php foreach($comments as $comment): ?>
                 <article>
                     <div class="wapper">
                         <div class="nameArea">
@@ -101,5 +102,5 @@
                 </div>   
 </body>
 </html>
-<?php require 'page.php';?>
+
 
