@@ -3,8 +3,7 @@
     require_once 'database.php';
     require_once 'functions.php';
     require_once 'post.php';
-    require_once 'date.php';
-    require_once 'page.php';
+    require_once 'page_data.php';
 
     $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
     $pdo = $dbHandler->getpdo();
@@ -85,8 +84,8 @@
                             
                         </div>
                         <p class="comment"><?php echo str2html($comment["comment"]); ?></p>
-                        <p class="comment"><?php echo str2html($comment["id"]); ?></p>
 
+                    
                         <div>
                             <form method="POST" action="delete.php">
                                 <input type="hidden" name="deletebutton" value="<?php echo $comment['id']; ?>">

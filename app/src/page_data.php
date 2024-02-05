@@ -43,6 +43,8 @@ $stmt->bindParam(':datemax', $datemax, PDO::PARAM_INT);
 $stmt->execute();
 $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//var_dump($comments);
+
 // 総ページ数の計算
 $sql = "SELECT COUNT(*) FROM bbs_table";
 $totalcount = $pdo->query($sql)->fetchColumn();
