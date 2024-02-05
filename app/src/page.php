@@ -49,12 +49,11 @@ $sql = "SELECT COUNT(*) FROM bbs_table";
 $totalcount = $pdo->query($sql)->fetchColumn();
 $totalpage = ceil($totalcount / $datemax);
 
-$sql = "SELECT id, username, title, comment, postdate FROM bbs_table";
-$comment_array2 = $pdo->query($sql);
 
 
-foreach ($results as $comment) {
-    echo "<p>{$comment['username']} - {$comment['comment']} - {$comment['postdate']}</p>";
+foreach ($comments as $comment) {
+    //var_dump($results);
+    echo "<p>{$comment['username']} - {$comment['title']} - {$comment['comment']} - {$comment['postdate']}</p>";
 }
 
 
