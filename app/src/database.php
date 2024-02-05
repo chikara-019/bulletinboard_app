@@ -1,12 +1,6 @@
 <?php
-    date_default_timezone_set("Asia/Tokyo");
 
-    $comment_array = array();
-    //arry=配列
-    //ただの変数だと1つしか入らないのにたいし、配列であれば複数対応可能 
-    //echo $_POST["submitButton"]. "<br>";
-    $pdo = null;
-    $stmt = null;
+
     //データベースとの接続を管理するdatabaseクラスを定義
     class Database{
         //privateで外部からのアクセスを制限
@@ -29,6 +23,10 @@
             return $this->pdo;
             //クラス内のプラベートメンバ変数の値を取得
         }
+
+
+
+        
     }
 
 

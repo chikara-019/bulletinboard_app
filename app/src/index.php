@@ -1,29 +1,32 @@
 <?php
 
-    //require_once 'database.php';
-    //$dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
-    //$pdo = $dbHandler->getPro();
+    require_once 'database.php';
+    require_once 'functions.php';
+
+    $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
+    $pdo = $dbHandler->getpdo();
     date_default_timezone_set("Asia/Tokyo");
 
 
 
 
     $comment_array = array();//配列にqueryで取得したものを入れておく
-    $pdo = null;
+    //$pdo = null;
     $stmt = null;
     $error_messages = array();
-    $comment_page = 20;
 
-
+    /*
     try{
         $pdo = new PDO('mysql:host=run-php-db;dbname=bbs_yt', "root", "root");
 
     }catch(PDOException $e){
         echo $e->getMessage();
     }
+    */
     
     $sql = "SELECT id, username, title, comment, postdate FROM bbs_table";
     $comment_array = $pdo->query($sql);//sql文をqueryを使って問い合わせができる
+    
 
 
     //フォームを打ち込んだ時
@@ -57,10 +60,12 @@
         
                 $stmt->execute();
                 
-                echo "投稿完了いたしました。";
+                echo "投稿完了。";
 
             }catch(PDOException $e){
-                echo "投稿に失敗しました。". $e->getMessage();
+                //echo "投稿に失敗しました。". $e->getMessage();
+                header('Location: post.php' . urlencode("投稿に失敗しました。" . $e->getMessage()));
+                exit;
             }
         
 
@@ -110,21 +115,22 @@
                     <div class="wapper">
                         <div class="nameArea">
                             <span>名前：</span>
-                            <p class="username"><?php echo $comment["username"]; ?></p>
+                            <p class="username"><?php echo str2html($comment["username"]); ?></p>
                             <span>タイトル：</span>
 
-                            <p class="username"><?php echo $comment["title"]; ?></p>
+                            <p class="username"><?php echo str2html($comment["title"]); ?></p>
                             <time>:<?php echo $comment["postdate"]; ?></time>
                             
                         </div>
-                        <p class="comment"><?php echo $comment["comment"]; ?></p>
+                        <p class="comment"><?php echo str2html($comment["comment"]); ?></p>
                     </div>
                 </article>
             <?php endforeach; ?>
         </section>
 
                 <div>
-                    <?php require 'page.php';?>
                 </div>   
 </body>
 </html>
+<?php require 'page.php';?>
+
