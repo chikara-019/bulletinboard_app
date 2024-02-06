@@ -9,30 +9,6 @@
     $pdo = $dbHandler->getpdo();
     date_default_timezone_set("Asia/Tokyo");
 
-
-
-
-    $comment_array = array();//配列にqueryで取得したものを入れておく
-    //$pdo = null;
-    $stmt = null;
-    $error_messages = array();
-
-    /*
-    try{
-        $pdo = new PDO('mysql:host=run-php-db;dbname=bbs_yt', "root", "root");
-
-    }catch(PDOException $e){
-        echo $e->getMessage();
-    }
-    */
-    
-    $sql = "SELECT id, username, title, comment, postdate FROM bbs_table";
-    $comment_array = $pdo->query($sql);//sql文をqueryを使って問い合わせができる
-    
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -70,20 +46,20 @@
             <!--requiredでの入力制限かけること可能-->
     <div class="boardWrapper">
         <section>
-            <?php foreach($comments as $comment): ?>
+            <?php foreach($comments as $data): ?>
                 <article>
                     <div class="wapper">
                         <div class="nameArea">
                             <span>名前：</span>
-                            <p class="username"><?php echo str2html($comment["username"]); ?></p>
+                            <p class="username"><?php echo str2html($data["username"]); ?></p>
 
                             <span>タイトル：</span>
 
-                            <p class="username"><?php echo str2html($comment["title"]); ?></p>
-                            <time>:<?php echo $comment["postdate"]; ?></time>
+                            <p class="username"><?php echo str2html($data["title"]); ?></p>
+                            <time>:<?php echo $data["postdate"]; ?></time>
                             
                         </div>
-                        <p class="comment"><?php echo str2html($comment["comment"]); ?></p>
+                        <p class="comment"><?php echo str2html($data["comment"]); ?></p>
 
                     
                         <div>
@@ -97,8 +73,8 @@
             <?php endforeach; ?>
         </section>
 
-                <div>
-                </div>   
+                
+    </div>   
 </body>
 </html>
 

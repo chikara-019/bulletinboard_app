@@ -1,16 +1,5 @@
 <?php
-/*
-echo "aaaaa<br>";
-echo "aaaaa<br>";
-echo "aaaaa<br>";
-echo "aaaaa<br>";
-echo "aaaaa<br>";
-*/
-
-
-
 require_once 'database.php';
-
 
 date_default_timezone_set("Asia/tokyo");
 
@@ -26,7 +15,7 @@ if(isset($_POST['deletebutton'])){
         $stmt->bindParam(':id', $post_id, PDO::PARAM_INT);
         $stmt->execute();
 
-        echo "投稿削除完了しました。";
+        echo "投稿を削除しました。<br>";
         echo "<a href='index.php'>戻る</a>";
         
     }catch(PDOException $e){

@@ -5,10 +5,6 @@ $dbHandler2 = new Database('run-php-db', 'bbs_yt', 'root', 'root');
 $pdo = $dbHandler2->getpdo();
 date_default_timezone_set("Asia/Tokyo");
 
-
-
-
-
     //フォームを打ち込んだ時
     if(!empty($_POST["submitButton"])){
 
@@ -46,13 +42,12 @@ date_default_timezone_set("Asia/Tokyo");
                 $stmt = $pdo->prepare("INSERT INTO bbs_table (username, title, comment, postdate) VALUES(:username, :title, :comment, :postdate)");
                 $stmt->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
                 $stmt->bindParam(':title', $_POST['title'], PDO::PARAM_STR);
-
                 $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
                 $stmt->bindParam(':postdate', $postdate, PDO::PARAM_STR);
         
                 $stmt->execute();
                 
-                echo "投稿完了。";
+                echo "投稿完了";
 
             }catch(PDOException $e){
                 //echo "投稿に失敗しました。". $e->getMessage();

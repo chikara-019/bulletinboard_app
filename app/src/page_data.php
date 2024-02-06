@@ -1,33 +1,10 @@
 
 <?php
 
-/*
 require_once 'database.php';
 
 $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
-$pdo = $dbHandler->getPDO();
-
-$sql = "SELECT COUNT(*) FROM bbs_table";
-
-$stmt = $pdo->query($sql);
-$totalcount = $stmt->fetchColumn(); 
-
-$datemax = 10;
-$totalpage = ceil($totalcount / $datemax);
-
-
-
-echo "total: " . $totalcount;
-echo "page" . $totalpage;
-?>
-*/
-
-
-
-require_once 'database.php';
-
-$dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
-$pdo = $dbHandler->getPDO();
+$pdo = $dbHandler->getpdo();
 
 $datemax = 20;
 
