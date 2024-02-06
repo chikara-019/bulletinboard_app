@@ -8,7 +8,7 @@ $pdo = $dbHandler->getpdo();
 
 $datemax = 20;
 
-// 現在のページ番号、デフォルトは1
+// デフォルト1
 $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 $offset = ($current_page - 1) * $datemax;
@@ -22,14 +22,9 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //var_dump($comments);
 
-// 総ページ数の計算
 $sql = "SELECT COUNT(*) FROM bbs_table";
 $totalcount = $pdo->query($sql)->fetchColumn();
 $totalpage = ceil($totalcount / $datemax);
-
-
-
-
 
 
 // ページネーションリンクの表示

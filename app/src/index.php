@@ -5,8 +5,8 @@
     require_once 'post.php';
     require_once 'page_data.php';
 
-    $dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
-    $pdo = $dbHandler->getpdo();
+    //$dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
+    //$pdo = $dbHandler->getpdo();
     date_default_timezone_set("Asia/Tokyo");
 
 ?>

@@ -12,7 +12,7 @@
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 //接続okだと＄pdoに接続時に使用される情報が代入
             }catch(PDOException $e){
-                echo 'Connection failed:'. $e->getMessage();
+                echo "失敗しました。". $e->getMessage();
                 //接続に失敗した際はPDOExceptionエラー詳細情報が確認できる
                 //$e->getMessage()
             }
@@ -32,3 +32,4 @@
 
 
 ?>
+
