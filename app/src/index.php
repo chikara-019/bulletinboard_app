@@ -3,7 +3,7 @@
     require_once 'database.php';
     require_once 'functions.php';
     require_once 'post.php';
-    require_once 'page_data.php';
+    require_once 'data.php';
 
     //$dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
     //$pdo = $dbHandler->getpdo();
@@ -43,7 +43,8 @@
                 <p><input type="reset" value="入力内容消去" name="reset"></p>
             </div>
 
-            <!--requiredでの入力制限かけること可能-->
+    
+    </form>        <!--requiredでの入力制限かけること可能-->
     <div class="boardWrapper">
         <section>
             <?php foreach($comments as $data): ?>
@@ -64,15 +65,18 @@
                     
                         <div>
                             <form method="POST" action="delete.php">
-                                <input type="hidden" name="deletebutton" value="<?php echo $comment['id']; ?>">
+                                <input type="hidden" name="deletebutton" value="<?php echo $data['id']; ?>">
                                 <input type="submit" value="削除ボタン">
                             </form>
                         </div>
                     </div>
                 </article>
             <?php endforeach; ?>
-        </section>
 
+        </section>
+        <div>
+            <?php require_once 'page.php'; ?>
+        </div>
                 
     </div>   
 </body>

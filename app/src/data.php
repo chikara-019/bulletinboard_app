@@ -3,7 +3,7 @@
 
 require_once 'database.php';
 
-$dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
+$dbHandler = new Database('DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASSWORD');
 $pdo = $dbHandler->getpdo();
 
 $datemax = 20;
@@ -22,17 +22,4 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //var_dump($comments);
 
-$sql = "SELECT COUNT(*) FROM bbs_table";
-$totalcount = $pdo->query($sql)->fetchColumn();
-$totalpage = ceil($totalcount / $datemax);
-
-
-// ページネーションリンクの表示
-for ($i = 1; $i <= $totalpage; $i++) {
-    if ($i == $current_page) {
-        echo "<span class='current'>$i</span>";
-    } else {
-        echo "<a href='?page=$i'>$i</a>";
-    }
-}
 ?>

@@ -1,7 +1,7 @@
 <?php
 require_once 'database.php';
 
-$dbHandler2 = new Database('run-php-db', 'bbs_yt', 'root', 'root');
+$dbHandler2 = new Database('DB_HOST', 'DB_NAME', 'DB_NAME', 'DB_PASSWORD');
 $pdo = $dbHandler2->getpdo();
 date_default_timezone_set("Asia/Tokyo");
 
