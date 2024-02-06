@@ -3,7 +3,7 @@
 
 require_once 'database.php';
 
-$dbHandler = new Database('run-php-db', 'bbs_yt', 'root', 'root');
+$dbHandler = new Database('DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASSWORD');
 $pdo = $dbHandler->getpdo();
 
 $datemax = 20;
